@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Müşteri Bilgilerini Düzenle</h2>
+<form method="POST">
+    <label>Ad:</label>
+    <input type="text" name="ad" value="{{ musteri.ad }}" required><br>
+    
+    <label>Soyad:</label>
+    <input type="text" name="soyad" value="{{ musteri.soyad }}" required><br>
+
+    <label>Telefon:</label>
+    <input type="text" name="telefon" value="{{ musteri.telefon }}" required><br>
+
+    <label>Plaka:</label>
+    <input type="text" name="plaka" value="{{ musteri.plaka }}" required><br>
+
+    <button type="submit">Kaydet</button>
+</form>
+<a href="{{ url_for('main.customers') }}">Geri Dön</a>
+{% endblock %}

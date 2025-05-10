@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Otopark Otomasyon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Flash mesajları (pop-out görünümde) -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash-message flash-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Navbar sadece login sayfası dışında gösterilir -->
+{% if request.endpoint not in ['auth.login', 'auth.plaka_login', 'auth.plaka_bilgileri'] and (session.get("admin_id") or session.get("plaka")) %}
+<div class="navbar">
+    <div><a href="/">Anasayfa</a></div>
+    <div>
+        <a href="/customers">Müşteriler</a>
+        <a href="/vehicles">Araçlar</a>
+        <a href="/entry_exit">Giriş/Çıkış</a>
+        <a href="/subscriptions">Abonelikler</a>
+        <a href="/payments">Ödemeler</a>
+        {% if session.get("admin_id") %}
+        <a href="/admin-panel">Yönetim Paneli</a>
+        <a href="/add-sample-data">Veri Ekle</a>
+        <a href="{{ url_for('auth.logout') }}">Çıkış</a>
+            {% elif session.get("plaka") %}
+        <a href="{{ url_for('auth.user_logout') }}">Çıkış</a>
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+
+<!-- Sayfa içeriği -->
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

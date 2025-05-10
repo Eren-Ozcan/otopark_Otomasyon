@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Otopark Otomasyon Dashboard</h1>
+<ul>
+    <li>Toplam Müşteri: {{ musteri_sayisi }}</li>
+    <li>Kayıtlı Araç: {{ arac_sayisi }}</li>
+    <li>Giriş/Çıkış Kaydı: {{ kayit_sayisi }}</li>
+    <li>Aktif Abonelik: {{ abonelik_sayisi }}</li>
+    <li>Toplam Ödeme Sayısı: {{ odeme_sayisi }}</li>
+    <li>Toplam Ödeme Tutarı: {{ odeme_toplam }} ₺</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Yeni Kayıt Ekle</h2>
+<form method="POST" action="{{ url_for('main.add_sample_data') }}">
+    <fieldset>
+        <legend><strong>Müşteri Bilgileri</strong></legend>
+        <label>Ad:</label><input type="text" name="musteri_ad" required><br>
+        <label>Soyad:</label><input type="text" name="musteri_soyad" required><br>
+        <label>Telefon:</label><input type="text" name="musteri_telefon" required><br>
+        <label>Plaka:</label><input type="text" name="musteri_plaka" required><br>
+        <label>Şifre:</label><input type="password" name="musteri_password" required><br>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend><strong>Araç Bilgileri</strong></legend>
+        <label>Marka:</label><input type="text" name="arac_marka" required><br>
+        <label>Model:</label><input type="text" name="arac_model" required><br>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend><strong>Giriş/Çıkış Bilgileri</strong></legend>
+        <label>Giriş Zamanı:</label><input type="datetime-local" name="giris_zamani" required><br>
+        <label>Çıkış Zamanı:</label><input type="datetime-local" name="cikis_zamani"><br>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend><strong>Abonelik Bilgileri</strong></legend>
+        <label>Başlangıç Tarihi:</label><input type="date" name="abonelik_baslangic"><br>
+        <label>Bitiş Tarihi:</label><input type="date" name="abonelik_bitis"><br>
+        <label>Abonelik Tipi:</label><input type="text" name="abonelik_tipi"><br>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <legend><strong>Ödeme Bilgileri</strong></legend>
+        <label>Tutar:</label><input type="number" name="odeme_tutar" step="0.01"><br>
+        <label>Ödeme Zamanı:</label><input type="datetime-local" name="odeme_zamani"><br>
+        <label>Ödeme Tipi:</label><input type="text" name="odeme_tipi"><br>
+    </fieldset>
+    <br>
+
+    <button type="submit">Kaydet</button>
+</form>
+{% endblock %}

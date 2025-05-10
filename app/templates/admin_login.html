@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Giriş</h2>
+<form method="POST" action="{{ url_for('auth.login') }}">
+    <label>Kullanıcı Adı:</label>
+    <input type="text" name="username" required>
+    <label>Şifre:</label>
+    <input type="password" name="password" required>
+    <button type="submit">Giriş Yap</button>
+</form>
+
+<hr>
+
+<h2>Plaka ile Giriş</h2>
+<form method="POST" action="{{ url_for('auth.plaka_login') }}">
+    <label>Plaka:</label>
+    <input type="text" name="plaka" required>
+
+    <label>Şifre:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Sorgula</button>
+</form>
+{% endblock %}
