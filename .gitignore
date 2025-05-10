@@ -1,0 +1,9 @@
+# Sanal ortam
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# VSCode ayarları
+.vscode/
