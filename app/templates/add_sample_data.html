@@ -1,47 +1,109 @@
 {% extends "base.html" %}
+
 {% block content %}
 <h2>Yeni Kayıt Ekle</h2>
-<form method="POST" action="{{ url_for('main.add_sample_data') }}">
-    <fieldset>
-        <legend><strong>Müşteri Bilgileri</strong></legend>
-        <label>Ad:</label><input type="text" name="musteri_ad" required><br>
-        <label>Soyad:</label><input type="text" name="musteri_soyad" required><br>
-        <label>Telefon:</label><input type="text" name="musteri_telefon" required><br>
-        <label>Plaka:</label><input type="text" name="musteri_plaka" required><br>
-        <label>Şifre:</label><input type="password" name="musteri_password" required><br>
-    </fieldset>
-    <br>
 
-    <fieldset>
-        <legend><strong>Araç Bilgileri</strong></legend>
-        <label>Marka:</label><input type="text" name="arac_marka" required><br>
-        <label>Model:</label><input type="text" name="arac_model" required><br>
-    </fieldset>
-    <br>
+<form method="POST" action="{{ url_for('main.add_sample_data') }}" class="form-container">
 
-    <fieldset>
-        <legend><strong>Giriş/Çıkış Bilgileri</strong></legend>
-        <label>Giriş Zamanı:</label><input type="datetime-local" name="giris_zamani" required><br>
-        <label>Çıkış Zamanı:</label><input type="datetime-local" name="cikis_zamani"><br>
-    </fieldset>
-    <br>
+  <fieldset class="fieldset-container">
+    <legend><strong>Müşteri Bilgileri</strong></legend>
 
-    <fieldset>
-        <legend><strong>Abonelik Bilgileri</strong></legend>
-        <label>Başlangıç Tarihi:</label><input type="date" name="abonelik_baslangic"><br>
-        <label>Bitiş Tarihi:</label><input type="date" name="abonelik_bitis"><br>
-        <label>Abonelik Tipi:</label><input type="text" name="abonelik_tipi"><br>
-    </fieldset>
-    <br>
+    <div class="form-group">
+      <label for="musteri_ad">Ad:</label>
+      <input id="musteri_ad" type="text" name="musteri_ad" class="form-input" required>
+    </div>
 
-    <fieldset>
-        <legend><strong>Ödeme Bilgileri</strong></legend>
-        <label>Tutar:</label><input type="number" name="odeme_tutar" step="0.01"><br>
-        <label>Ödeme Zamanı:</label><input type="datetime-local" name="odeme_zamani"><br>
-        <label>Ödeme Tipi:</label><input type="text" name="odeme_tipi"><br>
-    </fieldset>
-    <br>
+    <div class="form-group">
+      <label for="musteri_soyad">Soyad:</label>
+      <input id="musteri_soyad" type="text" name="musteri_soyad" class="form-input" required>
+    </div>
 
-    <button type="submit">Kaydet</button>
+    <div class="form-group">
+      <label for="musteri_telefon">Telefon:</label>
+      <input id="musteri_telefon" type="text" name="musteri_telefon" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="musteri_plaka">Plaka:</label>
+      <input id="musteri_plaka" type="text" name="musteri_plaka" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="musteri_password">Şifre:</label>
+      <input id="musteri_password" type="password" name="musteri_password" class="form-input" required>
+    </div>
+  </fieldset>
+
+  <!-- Araç -->
+  <fieldset class="fieldset-container">
+    <legend><strong>Araç Bilgileri</strong></legend>
+
+    <div class="form-group">
+      <label for="arac_marka">Marka:</label>
+      <input id="arac_marka" type="text" name="arac_marka" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="arac_model">Model:</label>
+      <input id="arac_model" type="text" name="arac_model" class="form-input" required>
+    </div>
+  </fieldset>
+
+  <!-- Giriş/Çıkış -->
+  <fieldset class="fieldset-container">
+    <legend><strong>Giriş/Çıkış Bilgileri</strong></legend>
+
+    <div class="form-group">
+      <label for="giris_zamani">Giriş Zamanı:</label>
+      <input id="giris_zamani" type="datetime-local" name="giris_zamani" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+      <label for="cikis_zamani">Çıkış Zamanı:</label>
+      <input id="cikis_zamani" type="datetime-local" name="cikis_zamani" class="form-input">
+    </div>
+  </fieldset>
+
+  <!-- Abonelik -->
+  <fieldset class="fieldset-container">
+    <legend><strong>Abonelik Bilgileri</strong></legend>
+
+    <div class="form-group">
+      <label for="abonelik_baslangic">Başlangıç Tarihi:</label>
+      <input id="abonelik_baslangic" type="date" name="abonelik_baslangic" class="form-input">
+    </div>
+
+    <div class="form-group">
+      <label for="abonelik_bitis">Bitiş Tarihi:</label>
+      <input id="abonelik_bitis" type="date" name="abonelik_bitis" class="form-input">
+    </div>
+
+    <div class="form-group">
+      <label for="abonelik_tipi">Abonelik Tipi:</label>
+      <input id="abonelik_tipi" type="text" name="abonelik_tipi" class="form-input">
+    </div>
+  </fieldset>
+
+  <!-- Ödeme -->
+  <fieldset class="fieldset-container">
+    <legend><strong>Ödeme Bilgileri</strong></legend>
+
+    <div class="form-group">
+      <label for="odeme_tutar">Tutar:</label>
+      <input id="odeme_tutar" type="number" name="odeme_tutar" class="form-input" step="0.01">
+    </div>
+
+    <div class="form-group">
+      <label for="odeme_zamani">Ödeme Zamanı:</label>
+      <input id="odeme_zamani" type="datetime-local" name="odeme_zamani" class="form-input">
+    </div>
+
+    <div class="form-group">
+      <label for="odeme_tipi">Ödeme Tipi:</label>
+      <input id="odeme_tipi" type="text" name="odeme_tipi" class="form-input">
+    </div>
+  </fieldset>
+
+  <button type="submit" class="button-primary">Kaydet</button>
 </form>
 {% endblock %}

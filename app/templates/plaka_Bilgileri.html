@@ -1,65 +1,92 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="text-align: right; margin-bottom: 20px;">
-    <a href="{{ url_for('auth.user_logout') }}" class="logout-button">Çıkış Yap</a>
-</div>
+  <div style="text-align: right; margin-bottom: 20px;">
+    <a href="{{ url_for('auth.user_logout') }}" class="button-danger">
+      Çıkış Yap
+    </a>
+  </div>
 
-<h2>Plaka Bilgileri: {{ arac.plaka }}</h2>
+  <h2>Plaka Bilgileri: {{ arac.plaka }}</h2>
 
-<h3>Müşteri Bilgisi</h3>
-<p>Ad: {{ musteri.ad }}</p>
-<p>Soyad: {{ musteri.soyad }}</p>
-<p>Telefon: {{ musteri.telefon }}</p>
+  <div class="detail-section">
+    <h3>Müşteri Bilgisi</h3>
+    <p>Ad: {{ musteri.ad }}</p>
+    <p>Soyad: {{ musteri.soyad }}</p>
+    <p>Telefon: {{ musteri.telefon }}</p>
 
-<h3>Araç Bilgisi</h3>
-<p>Marka: {{ arac.marka }}</p>
-<p>Model: {{ arac.model }}</p>
+    <h3>Araç Bilgisi</h3>
+    <p>Marka: {{ arac.marka }}</p>
+    <p>Model: {{ arac.model }}</p>
+  </div>
 
-<h3>Giriş/Çıkış Kayıtları</h3>
-{% if kayitlar %}
-<table>
-    <tr><th>Giriş</th><th>Çıkış</th></tr>
-    {% for k in kayitlar %}
-    <tr>
-        <td>{{ k.giris_zamani|format_date }}</td>
-        <td>{{ k.cikis_zamani|format_date }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>Kayıt bulunamadı.</p>
-{% endif %}
+  <h3>Giriş/Çıkış Kayıtları</h3>
+  {% if kayitlar %}
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Giriş Zamanı</th>
+          <th>Çıkış Zamanı</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for k in kayitlar %}
+          <tr>
+            <td>{{ k.giris_zamani|format_date }}</td>
+            <td>{{ k.cikis_zamani|format_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Kayıt bulunamadı.</p>
+  {% endif %}
 
-<h3>Abonelikler</h3>
-{% if abonelikler %}
-<table>
-    <tr><th>Başlangıç</th><th>Bitiş</th><th>Tip</th></tr>
-    {% for ab in abonelikler %}
-    <tr>
-        <td>{{ ab.baslangic_tarihi|format_date }}</td>
-        <td>{{ ab.bitis_tarihi|format_date }}</td>
-        <td>{{ ab.abonelik_tipi }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>Abonelik bulunamadı.</p>
-{% endif %}
+  <h3>Abonelikler</h3>
+  {% if abonelikler %}
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Başlangıç</th>
+          <th>Bitiş</th>
+          <th>Tip</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ab in abonelikler %}
+          <tr>
+            <td>{{ ab.baslangic_tarihi|format_date }}</td>
+            <td>{{ ab.bitis_tarihi|format_date }}</td>
+            <td>{{ ab.abonelik_tipi }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Abonelik bulunamadı.</p>
+  {% endif %}
 
-<h3>Ödemeler</h3>
-{% if odemeler %}
-<table>
-    <tr><th>Tutar</th><th>Zaman</th><th>Tip</th></tr>
-    {% for od in odemeler %}
-    <tr>
-        <td>{{ od.tutar }}</td>
-        <td>{{ od.odeme_zamani|format_date }}</td>
-        <td>{{ od.odeme_tipi }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% else %}
-<p>Ödeme bulunamadı.</p>
-{% endif %}
+  <h3>Ödemeler</h3>
+  {% if odemeler %}
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Tutar</th>
+          <th>Zaman</th>
+          <th>Tip</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for od in odemeler %}
+          <tr>
+            <td>{{ od.tutar }} ₺</td>
+            <td>{{ od.odeme_zamani|format_date }}</td>
+            <td>{{ od.odeme_tipi }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Ödeme bulunamadı.</p>
+  {% endif %}
 {% endblock %}

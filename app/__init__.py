@@ -20,7 +20,8 @@ def create_app():
     @app.template_filter("format_date")
     def format_date(value):
         if isinstance(value, (datetime, date)):
-            return value.strftime("%d.%m.%Y")
+            return value.strftime("%d.%m.%Y %H:%M:%S")
+
         return value
 
     return app

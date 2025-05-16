@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!-- Flash mesajları (pop-out görünümde) -->
+<!-- Flash mesajları -->
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, message in messages %}
@@ -16,7 +16,6 @@
   {% endif %}
 {% endwith %}
 
-<!-- Navbar sadece login sayfası dışında gösterilir -->
 {% if request.endpoint not in ['auth.login', 'auth.plaka_login', 'auth.plaka_bilgileri'] and (session.get("admin_id") or session.get("plaka")) %}
 <div class="navbar">
     <div><a href="/">Anasayfa</a></div>
@@ -27,18 +26,15 @@
         <a href="/subscriptions">Abonelikler</a>
         <a href="/payments">Ödemeler</a>
         {% if session.get("admin_id") %}
-        <a href="/admin-panel">Yönetim Paneli</a>
         <a href="/add-sample-data">Veri Ekle</a>
         <a href="{{ url_for('auth.logout') }}">Çıkış</a>
-            {% elif session.get("plaka") %}
+        {% elif session.get("plaka") %}
         <a href="{{ url_for('auth.user_logout') }}">Çıkış</a>
         {% endif %}
-
     </div>
 </div>
 {% endif %}
 
-<!-- Sayfa içeriği -->
 <div class="container">
     {% block content %}{% endblock %}
 </div>

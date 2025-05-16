@@ -1,39 +1,19 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Araç Düzenle</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="navbar">
-        <div><a href="/">Anasayfa</a></div>
-        <div>
-            <a href="/customers">Müşteriler</a>
-            <a href="/vehicles">Araçlar</a>
-            <a href="/entry_exit">Giriş/Çıkış</a>
-            <a href="/subscriptions">Abonelikler</a>
-            <a href="/payments">Ödemeler</a>
-            {% if session.get("admin_id") %}
-                <a href="/add-sample-data">Veri Ekle</a>
-                <a href="{{ url_for('auth.logout') }}">Çıkış</a>
-            {% endif %}
-        </div>
-    </div>
+{% extends "base.html" %}
 
-    <h2>Araç Bilgilerini Düzenle</h2>
-    <form method="POST">
-        <label for="plaka">Plaka:</label>
-        <input type="text" id="plaka" name="plaka" value="{{ arac.plaka }}" required><br><br>
+{% block content %}
+<h2>Araç Bilgilerini Düzenle</h2>
 
-        <label for="marka">Marka:</label>
-        <input type="text" id="marka" name="marka" value="{{ arac.marka }}" required><br><br>
+<form method="POST" class="form-container">
+    <label for="plaka">Plaka:</label>
+    <input type="text" id="plaka" name="plaka" value="{{ arac.plaka }}" class="form-input" required><br>
 
-        <label for="model">Model:</label>
-        <input type="text" id="model" name="model" value="{{ arac.model }}" required><br><br>
+    <label for="marka">Marka:</label>
+    <input type="text" id="marka" name="marka" value="{{ arac.marka }}" class="form-input" required><br>
 
-        <button type="submit">Kaydet</button>
-        <a href="{{ url_for('main.vehicles') }}">İptal</a>
-    </form>
-</body>
-</html>
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" value="{{ arac.model }}" class="form-input" required><br>
+
+    <button type="submit" class="button-primary">Kaydet</button>
+    <a href="{{ url_for('main.vehicles') }}">İptal</a>
+</form>
+{% endblock %}

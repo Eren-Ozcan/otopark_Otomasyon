@@ -1,38 +1,20 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Giriş/Çıkış Kaydını Düzenle</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="navbar">
-        <div><a href="/">Anasayfa</a></div>
-        <div>
-            <a href="/customers">Müşteriler</a>
-            <a href="/vehicles">Araçlar</a>
-            <a href="/entry_exit">Giriş/Çıkış</a>
-            <a href="/subscriptions">Abonelikler</a>
-            <a href="/payments">Ödemeler</a>
-            {% if session.get("admin_id") %}
-                <a href="/add-sample-data">Veri Ekle</a>
-                <a href="{{ url_for('auth.logout') }}">Çıkış</a>
-            {% endif %}
-        </div>
-    </div>
+{% extends "base.html" %}
 
-    <h1>Giriş/Çıkış Kaydını Düzenle</h1>
-    <form method="POST">
-        <label for="giris_zamani">Giriş Zamanı:</label>
-        <input type="datetime-local" name="giris_zamani" id="giris_zamani"
-               value="{{ kayit.giris_zamani.strftime('%Y-%m-%dT%H:%M') if kayit.giris_zamani else '' }}" required><br><br>
+{% block content %}
+<h2>Giriş/Çıkış Kaydını Düzenle</h2>
 
-        <label for="cikis_zamani">Çıkış Zamanı:</label>
-        <input type="datetime-local" name="cikis_zamani" id="cikis_zamani"
-               value="{{ kayit.cikis_zamani.strftime('%Y-%m-%dT%H:%M') if kayit.cikis_zamani else '' }}"><br><br>
+<form method="POST" class="form-container">
+    <label for="giris_zamani">Giriş Zamanı:</label>
+    <input type="datetime-local" name="giris_zamani" id="giris_zamani"
+           class="form-input"
+           value="{{ kayit.giris_zamani.strftime('%Y-%m-%dT%H:%M') if kayit.giris_zamani else '' }}" required><br>
 
-        <button type="submit">Kaydet</button>
-        <a href="{{ url_for('main.entry_exit') }}">İptal</a>
-    </form>
-</body>
-</html>
+    <label for="cikis_zamani">Çıkış Zamanı:</label>
+    <input type="datetime-local" name="cikis_zamani" id="cikis_zamani"
+           class="form-input"
+           value="{{ kayit.cikis_zamani.strftime('%Y-%m-%dT%H:%M') if kayit.cikis_zamani else '' }}"><br>
+
+    <button type="submit" class="button-primary">Kaydet</button>
+    <a href="{{ url_for('main.entry_exit') }}">İptal</a>
+</form>
+{% endblock %}

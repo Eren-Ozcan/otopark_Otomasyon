@@ -2,20 +2,22 @@
 
 {% block content %}
 <h2>Müşteri Bilgilerini Düzenle</h2>
-<form method="POST">
+<form method="POST" class="form-container">
     <label>Ad:</label>
-    <input type="text" name="ad" value="{{ musteri.ad }}" required><br>
-    
+    <input type="text" name="ad" value="{{ musteri.ad }}" class="form-input" required><br>
+
     <label>Soyad:</label>
-    <input type="text" name="soyad" value="{{ musteri.soyad }}" required><br>
+    <input type="text" name="soyad" value="{{ musteri.soyad }}" class="form-input" required><br>
 
     <label>Telefon:</label>
-    <input type="text" name="telefon" value="{{ musteri.telefon }}" required><br>
+    <input type="text" name="telefon" value="{{ musteri.telefon }}" class="form-input" required><br>
 
     <label>Plaka:</label>
-    <input type="text" name="plaka" value="{{ musteri.plaka }}" required><br>
+    <input type="text" name="plaka" value="{{ musteri.plaka }}" class="form-input" required><br>
 
-    <button type="submit">Kaydet</button>
+    <button type="submit" class="button-primary">Kaydet</button>
 </form>
+
+<br>
 <a href="{{ url_for('main.customers') }}">Geri Dön</a>
 {% endblock %}

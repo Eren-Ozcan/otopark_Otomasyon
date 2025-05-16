@@ -1,27 +1,28 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Abonelik Düzenle</title>
-</head>
-<body>
-    <h1>Abonelik Düzenle</h1>
-    <form method="POST">
-        <label>Müşteri ID:</label>
-        <input type="number" name="musteri_id" value="{{ abonelik.musteri_id }}" required><br><br>
+{% extends "base.html" %}
 
-        <label>Başlangıç Tarihi:</label>
-        <input type="date" name="baslangic_tarihi" value="{{ abonelik.baslangic_tarihi.strftime('%Y-%m-%d') if abonelik.baslangic_tarihi else '' }}"><br><br>
+{% block content %}
+<h2>Abonelik Bilgilerini Düzenle</h2>
 
-        <label>Bitiş Tarihi:</label>
-        <input type="date" name="bitis_tarihi" value="{{ abonelik.bitis_tarihi.strftime('%Y-%m-%d') if abonelik.bitis_tarihi else '' }}"><br><br>
+<form method="POST" class="form-container">
+    <label>Müşteri ID:</label>
+    <input type="number" name="musteri_id" value="{{ abonelik.musteri_id }}" class="form-input" required><br>
 
-        <label>Abonelik Tipi:</label>
-        <input type="text" name="abonelik_tipi" value="{{ abonelik.abonelik_tipi }}" required><br><br>
+    <label>Başlangıç Tarihi:</label>
+    <input type="date" name="baslangic_tarihi"
+           value="{{ abonelik.baslangic_tarihi.strftime('%Y-%m-%d') if abonelik.baslangic_tarihi else '' }}"
+           class="form-input"><br>
 
-        <button type="submit">Güncelle</button>
-    </form>
-    <br>
-    <a href="{{ url_for('main.subscriptions') }}">Geri Dön</a>
-</body>
-</html>
+    <label>Bitiş Tarihi:</label>
+    <input type="date" name="bitis_tarihi"
+           value="{{ abonelik.bitis_tarihi.strftime('%Y-%m-%d') if abonelik.bitis_tarihi else '' }}"
+           class="form-input"><br>
+
+    <label>Abonelik Tipi:</label>
+    <input type="text" name="abonelik_tipi" value="{{ abonelik.abonelik_tipi }}" class="form-input" required><br>
+
+    <button type="submit" class="button-primary">Güncelle</button>
+</form>
+
+<br>
+<a href="{{ url_for('main.subscriptions') }}">Geri Dön</a>
+{% endblock %}

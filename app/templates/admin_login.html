@@ -1,24 +1,27 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Admin Giriş</h2>
-<form method="POST" action="{{ url_for('auth.login') }}">
-    <label>Kullanıcı Adı:</label>
-    <input type="text" name="username" required>
-    <label>Şifre:</label>
-    <input type="password" name="password" required>
-    <button type="submit">Giriş Yap</button>
-</form>
+  <h2>Admin Giriş</h2>
+  <form method="POST" action="{{ url_for('auth.login') }}" class="form-container">
+    <label for="username">Kullanıcı Adı:</label>
+    <input type="text" id="username" name="username" class="form-input" required>
 
-<hr>
+    <label for="password">Şifre:</label>
+    <input type="password" id="password" name="password" class="form-input" required>
 
-<h2>Plaka ile Giriş</h2>
-<form method="POST" action="{{ url_for('auth.plaka_login') }}">
-    <label>Plaka:</label>
-    <input type="text" name="plaka" required>
+    <button type="submit" class="button-primary">Giriş Yap</button>
+  </form>
 
-    <label>Şifre:</label>
-    <input type="password" name="password" required>
+  <hr>
 
-    <button type="submit">Sorgula</button>
-</form>
+  <h2>Plaka ile Giriş</h2>
+  <form method="POST" action="{{ url_for('auth.plaka_login') }}" class="form-container">
+    <label for="plaka">Plaka:</label>
+    <input type="text" id="plaka" name="plaka" class="form-input" required>
+
+    <label for="plate_password">Şifre:</label>
+    <input type="password" id="plate_password" name="password" class="form-input" required>
+
+    <button type="submit" class="button-primary">Sorgula</button>
+  </form>
 {% endblock %}
