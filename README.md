@@ -18,7 +18,7 @@ Modern, esnek ve güvenli bir **Flask** tabanlı otopark yönetim platformu. Kü
 
 - **Güvenlik**  
   - Scrypt ile tek yönlü parola hash’leme  
-  - Fernet ile reversible (geri çözülebilir) şifre saklama  
+  - Fernet şifre saklama  
   - Oturum bazlı yetkilendirme  
 
 - **Temiz UI & Responsive Tasarım**  
@@ -31,9 +31,9 @@ Modern, esnek ve güvenli bir **Flask** tabanlı otopark yönetim platformu. Kü
 ## 🛠️ Teknolojiler
 
 - **Backend:** Python · Flask · Flask-SQLAlchemy  
-- **Veritabanı:** PostgreSQL (yada SQLite/MySQL)  
-- **Şifreleme:** Werkzeug Scrypt · Cryptography (Fernet)  
-- **Frontend:** Jinja2 · HTML5 · CSS3 (Custom Properties, Grid, Flexbox)  
+- **Veritabanı:** PostgreSQL 
+- **Şifreleme:** Werkzeug Scrypt · Cryptography
+- **Frontend:** Jinja2 · HTML5 · CSS3
 
 ---
 
@@ -48,8 +48,6 @@ Modern, esnek ve güvenli bir **Flask** tabanlı otopark yönetim platformu. Kü
 Sanal ortam oluşturun
 
 bash
-Kopyala
-Düzenle
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 venv\Scripts\activate      # Windows
@@ -58,8 +56,6 @@ venv\Scripts\activate      # Windows
 Bağımlılıkları yükleyin
 
 bash
-Kopyala
-Düzenle
 pip install -r requirements.txt
 Çevresel değişkenleri tanımlayın
 
@@ -72,14 +68,10 @@ DATABASE_URL (örn. postgresql://user:pass@localhost/otopark_db)
 Veritabanını hazırlayın
 
 bash
-Kopyala
-Düzenle
 flask db upgrade        # Eğer Alembic migration kullanıyorsanız
 Uygulamayı başlatın
 
 bash
-Kopyala
-Düzenle
 flask run
 Ardından http://127.0.0.1:5000/ adresini ziyaret edin.
 
@@ -87,8 +79,6 @@ Ardından http://127.0.0.1:5000/ adresini ziyaret edin.
 📂 Proje Yapısı
 
 csharp
-Kopyala
-Düzenle
 otopark_Otomasyon/
 ├── app/
 │   ├── __init__.py        # Uygulama fabrikası
@@ -128,4 +118,4 @@ Test Veri Ekleme: /add-sample-data
 Eren ÖZCAN
 (https://github.com/Eren-Ozcan)
 Buse ÇAKAL
-[https://github.com/busecakal]
+(https://github.com/busecakal)
