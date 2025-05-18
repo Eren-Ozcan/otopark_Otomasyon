@@ -21,7 +21,7 @@ class Musteri(db.Model):
     ad = db.Column(db.String(50))
     soyad = db.Column(db.String(50))
     telefon = db.Column(db.String(20), unique=True)
-    plaka = db.Column(db.String(20), unique=True, nullable=False)
+    araclar = db.relationship('Arac', backref='sahibi', lazy=True)
     password_hash = db.Column(db.String(256))
 
     araclar = relationship(

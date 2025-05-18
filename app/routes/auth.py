@@ -32,7 +32,12 @@ def plaka_login():
         flash("Plaka ve şifre zorunludur!", "danger")
         return redirect(url_for("auth.login"))
 
-    musteri = Musteri.query.filter_by(plaka=plaka).first()
+    musteri = (
+    db.session.query(Musteri)
+    .join(Arac, Musteri.id == Arac.musteri_id)
+    .filter(Arac.plaka == plaka)
+    .first()
+)
 
     if musteri and musteri.check_password(password):
         session["plaka"] = plaka

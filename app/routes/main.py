@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, session, request, flash
 from sqlalchemy import func
+from sqlalchemy.orm import joinedload
 from app import db
 from app.models.models import Musteri, Arac, GirisCikisKayit, Abonelik, Odeme
 from datetime import datetime
-
 
 main = Blueprint("main", __name__)
 
@@ -37,22 +37,34 @@ def index():
 @main.route("/customers")
 @login_required
 def customers():
-    musteriler = Musteri.query.all()
+    # musteriler ve ilişkili araclar birlikte yükleniyor
+    musteriler = Musteri.query.options(joinedload(Musteri.araclar)).all()
     return render_template("customers.html", musteriler=musteriler)
 
 @main.route("/customers/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_customer(id):
-    musteri = Musteri.query.get_or_404(id)
+    musteri = Musteri.query.options(joinedload(Musteri.araclar)).get_or_404(id)
     if request.method == "POST":
+        # Temel müşteri alanları
         musteri.ad = request.form["ad"]
         musteri.soyad = request.form["soyad"]
         musteri.telefon = request.form["telefon"]
-        musteri.plaka = request.form["plaka"]
+
+        # Plaka güncellemesi: eğer araç varsa ilkini al, yoksa yenisini oluştur
+        yeni_plaka = request.form["plaka"]
+        if musteri.araclar:
+            arac = musteri.araclar[0]
+            arac.plaka = yeni_plaka
+        else:
+            arac = Arac(plaka=yeni_plaka, musteri_id=musteri.id)
+            db.session.add(arac)
+
         db.session.commit()
-        flash("Müşteri bilgileri güncellendi!", "success")
+        flash("Müşteri ve plaka bilgisi güncellendi!", "success")
         return redirect(url_for("main.customers"))
     return render_template("edit_customer.html", musteri=musteri)
+
 
 @main.route("/customers/delete/<int:id>", methods=["POST"])
 @login_required
@@ -91,20 +103,17 @@ def delete_vehicle(id):
     flash("Araç silindi.", "success")
     return redirect(url_for("main.vehicles"))
 
-
 @main.route("/entry_exit")
 @login_required
 def entry_exit():
     kayitlar = GirisCikisKayit.query.all()
     return render_template("entry_exit.html", kayitlar=kayitlar)
 
-# Giriş/Çıkış düzenleme sayfası
 @main.route("/entry_exit/edit/<int:id>", methods=["GET", "POST"])
 @login_required
 def edit_entry(id):
     kayit = GirisCikisKayit.query.get_or_404(id)
     if request.method == "POST":
-        from datetime import datetime
         giris = request.form.get("giris_zamani")
         cikis = request.form.get("cikis_zamani") or None
         kayit.giris_zamani = datetime.fromisoformat(giris) if giris else None
@@ -114,7 +123,6 @@ def edit_entry(id):
         return redirect(url_for("main.entry_exit"))
     return render_template("edit_entry.html", kayit=kayit)
 
-# Giriş/Çıkış silme işlemi
 @main.route("/entry_exit/delete/<int:id>", methods=["POST"])
 @login_required
 def delete_entry(id):
@@ -123,10 +131,6 @@ def delete_entry(id):
     db.session.commit()
     flash("Kayıt başarıyla silindi.", "success")
     return redirect(url_for("main.entry_exit"))
-
-
-# Abonelikler
-#
 
 @main.route("/subscriptions")
 @login_required
@@ -156,10 +160,6 @@ def delete_subscription(id):
     flash("Abonelik silindi.", "success")
     return redirect(url_for("main.subscriptions"))
 
-
-# Ödemeler
-#
-
 @main.route("/payments")
 @login_required
 def payments():
@@ -171,10 +171,10 @@ def payments():
 def edit_payment(id):
     od = Odeme.query.get_or_404(id)
     if request.method == "POST":
-        od.kayit_id      = request.form["kayit_id"]
-        od.tutar         = float(request.form["tutar"])
-        od.odeme_zamani  = datetime.fromisoformat(request.form["odeme_zamani"])
-        od.odeme_tipi    = request.form["odeme_tipi"]
+        od.kayit_id     = request.form["kayit_id"]
+        od.tutar        = float(request.form["tutar"])
+        od.odeme_zamani = datetime.fromisoformat(request.form["odeme_zamani"])
+        od.odeme_tipi   = request.form["odeme_tipi"]
         db.session.commit()
         flash("Ödeme güncellendi.", "success")
         return redirect(url_for("main.payments"))
@@ -189,25 +189,23 @@ def delete_payment(id):
     flash("Ödeme silindi.", "success")
     return redirect(url_for("main.payments"))
 
-
 @main.route("/add-sample-data", methods=["GET", "POST"])
 @login_required
 def add_sample_data():
-    from datetime import datetime
-
     if request.method == "POST":
+        # Müşteri oluştur (plaka bilgisi araçta saklanacak)
         musteri = Musteri(
             ad=request.form.get("musteri_ad"),
             soyad=request.form.get("musteri_soyad"),
-            telefon=request.form.get("musteri_telefon"),
-            plaka=request.form.get("musteri_plaka")
+            telefon=request.form.get("musteri_telefon")
         )
         musteri.set_password(request.form.get("musteri_password"))
         db.session.add(musteri)
         db.session.flush()
 
+        # Araç oluştur
         arac = Arac(
-            plaka=musteri.plaka,
+            plaka=request.form.get("musteri_plaka"),
             marka=request.form.get("arac_marka"),
             model=request.form.get("arac_model"),
             musteri_id=musteri.id
@@ -215,6 +213,7 @@ def add_sample_data():
         db.session.add(arac)
         db.session.flush()
 
+        # Giriş/Çıkış kaydı
         giris = request.form.get("giris_zamani")
         cikis = request.form.get("cikis_zamani") or None
         giris_dt = datetime.fromisoformat(giris) if giris else None
@@ -228,6 +227,7 @@ def add_sample_data():
         db.session.add(kayit)
         db.session.flush()
 
+        # Abonelik
         if request.form.get("abonelik_baslangic") and request.form.get("abonelik_bitis"):
             abonelik = Abonelik(
                 musteri_id=musteri.id,
@@ -237,6 +237,7 @@ def add_sample_data():
             )
             db.session.add(abonelik)
 
+        # Ödeme
         if request.form.get("odeme_tutar"):
             odeme = Odeme(
                 kayit_id=kayit.id,

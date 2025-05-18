@@ -8,7 +8,7 @@
         <th>Ad</th>
         <th>Soyad</th>
         <th>Telefon</th>
-        <th>Plaka</th>
+        <th>Plakalar</th>
         {% if session.get("admin_id") %}
         <th>İşlemler</th>
         {% endif %}
@@ -21,7 +21,15 @@
         <td>{{ m.ad }}</td>
         <td>{{ m.soyad }}</td>
         <td>{{ m.telefon }}</td>
-        <td>{{ m.plaka }}</td>
+        <td>
+          {% if m.araclar %}
+            {% for arac in m.araclar %}
+              {{ arac.plaka }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          {% else %}
+            &mdash;
+          {% endif %}
+        </td>
         {% if session.get("admin_id") %}
         <td>
           <a href="{{ url_for('main.edit_customer', id=m.id) }}"
